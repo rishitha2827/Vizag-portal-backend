@@ -10,7 +10,7 @@ const {
 } = require('../controllers/taskController');
 
 router.get('/assignees/:unit', protect, getAssigneesByUnit);
-router.post('/', protect, createTask);
+router.post('/create-task', protect, createTask);
 router.get('/assigned-to-me', protect, getAssignedToMe);
 router.get('/raised-by-me', protect, getRaisedByMe);
 router.patch('/:id/status', protect, updateTaskStatus);

@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
 const cron = require('node-cron');
 const Task = require('./models/Task');
@@ -13,6 +14,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
+<<<<<<< HEAD
 const allowedOrigins = [
   'https://vizag-portal-frontend.vercel.app',
   'http://localhost:3000' // Optional for local development
@@ -29,10 +31,19 @@ app.use(cors({
   credentials: true
 }));
 
+=======
+// Update CORS configuration to be more specific
+app.use(cors({
+  origin: ['https://vizag-portal-frontend.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH'],
+  credentials: true
+}));
+>>>>>>> c6f466a (Changes)
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => res.send('Vizag Portal API running'));
 
