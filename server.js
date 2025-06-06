@@ -14,7 +14,6 @@ dotenv.config();
 connectDB();
 
 const app = express();
-<<<<<<< HEAD
 const allowedOrigins = [
   'https://vizag-portal-frontend.vercel.app',
   'http://localhost:3000' // Optional for local development
@@ -31,14 +30,13 @@ app.use(cors({
   credentials: true
 }));
 
-=======
+
 // Update CORS configuration to be more specific
 app.use(cors({
   origin: ['https://vizag-portal-frontend.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'PATCH'],
   credentials: true
 }));
->>>>>>> c6f466a (Changes)
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
