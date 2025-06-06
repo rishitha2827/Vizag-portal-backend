@@ -20,13 +20,11 @@ exports.registerUser = async (req, res) => {
     password,
     confirmPassword,
     mobile,
-    unit,
-    role, // optional
   } = req.body;
 
   // Validate required fields
-  if (!firstName || !lastName || !email || !password || !confirmPassword || !mobile || !unit) {
-    return res.status(400).json({ message: `All fields are required !${firstName}  !${lastName} !${email} !${password}  !${confirmPassword}  !${mobile} !${unit}` });
+  if (!firstName || !lastName || !email || !password || !confirmPassword || !mobile) {
+    return res.status(400).json({ message: `All fields are required !${firstName}  !${lastName} !${email} !${password}  !${confirmPassword}  !${mobile}` });
   }
 
   if (password !== confirmPassword) {
@@ -48,9 +46,7 @@ exports.registerUser = async (req, res) => {
     lastName,
     email,
     password: hashedPassword,
-    mobile,
-    unit,
-    role: role || 'user', // default to 'user' if not provided
+    mobile
   });
 
   if (user) {
@@ -61,8 +57,6 @@ exports.registerUser = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        unit: user.unit,
-        role: user.role,
         lastLogin: user.lastLogin,
       },
     });
@@ -102,8 +96,6 @@ exports.loginUser = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        unit: user.unit,
-        role: user.role,
         lastLogin: user.lastLogin,
       },
     });

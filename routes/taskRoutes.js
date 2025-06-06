@@ -10,9 +10,9 @@ const {
 } = require('../controllers/taskController');
 
 router.get('/assignees/:unit', protect, getAssigneesByUnit);
-router.post('/create', protect, createTask);
+router.post('/', protect, createTask);
 router.get('/assigned-to-me', protect, getAssignedToMe);
 router.get('/raised-by-me', protect, getRaisedByMe);
-router.put('/:id', protect, updateTaskStatus);
+router.patch('/:id/status', protect, updateTaskStatus);
 
 module.exports = router;
