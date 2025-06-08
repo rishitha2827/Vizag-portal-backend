@@ -19,6 +19,7 @@ const allowedOrigins = [
   'http://localhost:3000' // Optional for local development
 ];
 
+// CORS middleware setup
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -30,13 +31,6 @@ app.use(cors({
   credentials: true
 }));
 
-
-// Update CORS configuration to be more specific
-app.use(cors({
-  origin: ['https://vizag-portal-frontend.vercel.app', 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'PATCH'],
-  credentials: true
-}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -48,13 +42,16 @@ app.get('/', (req, res) => res.send('Vizag Portal API running'));
 // Cron job to notify tasks older than 3 days
 cron.schedule('0 8 * * *', async () => {
   try {
-    const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
+    // Get tasks that are older than 3 days
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // Subtract 3 days
     const tasks = await Task.find({ 
       createdAt: { $lte: threeDaysAgo }, 
       status: { $in: ['Pending', 'Yet to Start'] }
     })
     .populate('assignedBy assignTo', 'email firstName lastName');
 
+    // Loop through tasks and send email reminders
     for (let task of tasks) {
       if (task.assignTo) {
         await sendEmail(
@@ -71,10 +68,15 @@ cron.schedule('0 8 * * *', async () => {
         );
       }
     }
+
     console.log(`Sent reminders for ${tasks.length} pending tasks`);
+
   } catch (error) {
     console.error('Error in cron job:', error);
   }
+}, {
+  scheduled: true,
+  timezone: "Asia/Kolkata" // Adjust the timezone based on your server or users' location
 });
 
 const PORT = process.env.PORT || 5000;

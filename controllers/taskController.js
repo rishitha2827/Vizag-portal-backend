@@ -95,19 +95,20 @@ exports.updateTaskStatus = async (req, res) => {
   const { id } = req.params;
 
   // Validate status against allowed values
-  const allowedStatuses = ['Pending', 'In Progress', 'Completed'];
+  const allowedStatuses = ['Yet to Start', 'In Progress', 'Completed'];
   if (!allowedStatuses.includes(status)) {
     return res.status(400).json({ 
       message: 'Invalid status value',
       allowedStatuses: allowedStatuses
     });
   }
+console.log("🛠 Updating task", id, "to status:", status);
 
   try {
     const task = await Task.findById(id)
       .populate('assignedBy', 'email firstName lastName')
       .populate('assignTo', 'firstName lastName');
-
+    console.log("🔍 Found task:", task);
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
