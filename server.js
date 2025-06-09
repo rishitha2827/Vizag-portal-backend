@@ -16,7 +16,8 @@ connectDB();
 const app = express();
 const allowedOrigins = [
   'https://vizag-portal-frontend.vercel.app',
-  'http://localhost:3000' // Optional for local development
+  'http://localhost:3000',
+  'http://localhost:5173/' // Optional for local development
 ];
 
 // CORS middleware setup
