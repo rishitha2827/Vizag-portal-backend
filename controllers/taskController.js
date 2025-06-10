@@ -1,3 +1,4 @@
+
 const Task = require('../models/Task');
 const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
@@ -102,13 +103,11 @@ exports.updateTaskStatus = async (req, res) => {
       allowedStatuses: allowedStatuses
     });
   }
-console.log("🛠 Updating task", id, "to status:", status);
 
   try {
     const task = await Task.findById(id)
       .populate('assignedBy', 'email firstName lastName')
       .populate('assignTo', 'firstName lastName');
-    console.log("🔍 Found task:", task);
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }

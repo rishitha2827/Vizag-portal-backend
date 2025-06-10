@@ -1,3 +1,4 @@
+
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -77,7 +78,7 @@ cron.schedule('0 8 * * *', async () => {
   }
 }, {
   scheduled: true,
-  timezone: "Asia/Kolkata" // Adjust the timezone based on your server or users' location
+  timezone: "Asia/Kolkata"
 });
 
 const PORT = process.env.PORT || 5000;
